@@ -28,14 +28,14 @@ async function initialize() {
     host: HOST,
   });
 
-  db.Category = require("../src/category/category.model")(
+  db.Category = require("../category/category.model")(
     sequelize
   );
-  db.Product = require("../src/product/product.model")(
+  db.Product = require("../product/product.model")(
     sequelize
   );
 
-  db.Category.HasMany(db.Product);
+  db.Category.hasMany(db.Product);
   db.Product.belongsTo(db.Category);
   
   await sequelize.sync({ alter: true });
