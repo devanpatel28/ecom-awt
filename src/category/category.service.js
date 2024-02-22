@@ -24,20 +24,20 @@ async function getById(id, callback) {
 }
 async function update(id, params) {
   const Category = await getCategory(id);
-  const nameChanged = params.Category_name && params.Category_name !== Category.Category_name;
+  const nameChanged = params.category_name && params.category_name !== Category.category_name;
   if (
     nameChanged &&
-    (await db.Category.findOne({ where: { Category_name: params.Category_name } }))
+    (await db.Category.findOne({ where: { category_name: params.category_name } }))
   ) {
-    return "Category with name " + params.Category_name + " is already exists";
+    return "Category with name " + params.category_name + " is already exists";
   }
   Object.assign(Category, params);
   await Category.save();
   return Category;
 }
 async function create(params) {
-  if (await db.Category.findOne({ where: { Category_name: params.Category_name } })) {
-    return "Category " + params.Category_name + " is already exists";
+  if (await db.Category.findOne({ where: { category_name: params.category_name } })) {
+    return "Category " + params.category_name + " is already exists";
   }
   const Category = new db.Category(params);
   await Category.save();
@@ -46,12 +46,12 @@ async function create(params) {
 async function changeStatus(id) {
   const Category = await getCategory(id);
   //    const ret_msg = '';
-  if (Category.Category_status) {
-    Category.Category_status = false;
+  if (Category.category_status) {
+    Category.category_status = false;
     // ret_msg = 'Camp Inactivated';
     console.log("from true");
   } else {
-    Category.Category_status = true;
+    Category.category_status = true;
     console.log("from false");
     // ret_msg = 'Camp Activated';
   }
@@ -60,7 +60,7 @@ async function changeStatus(id) {
 }
 async function searchByKeyword(searchKeyword) {
   const Category = await db.Category.findAll({
-    where: { Category_name: { [Op.like]: "%" + searchKeyword + "%" } },
+    where: { category_name: { [Op.like]: "%" + searchKeyword + "%" } },
   });
 
   if (!Category || Category == []) return "no Category found";

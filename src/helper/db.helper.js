@@ -5,7 +5,7 @@ const { MYSQL_DB_CONFIG } = require("../config/db.config");
 const mysql = require("mysql2/promise");
 
 //for Sequelize ORM
-const { Sequelize, HasMany } = require("sequelize");
+const { Sequelize } = require("sequelize");
 
 module.exports = db = {};
 
@@ -34,9 +34,15 @@ async function initialize() {
   db.Product = require("../product/product.model")(
     sequelize
   );
+  db.Variant = require("../variant/variant.model")(
+    sequelize
+  );
 
   db.Category.hasMany(db.Product);
   db.Product.belongsTo(db.Category);
+
+  db.Product.hasMany(db.Variant);
+  db.Variant.belongsTo(db.Product);
   
   await sequelize.sync({ alter: true });
 }

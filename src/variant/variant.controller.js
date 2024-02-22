@@ -1,4 +1,4 @@
-const attribute_service = require("./product.service");
+const attribute_service = require("./variant.service");
 exports.create = (req, res, next) => {
   attribute_service
     .create(req.body)

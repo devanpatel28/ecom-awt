@@ -1,4 +1,4 @@
-const attributeController = require("../product/product.controller");
+const attributeController = require("../variant/variant.controller");
 const express = require("express");
 const router = express.Router();
 
